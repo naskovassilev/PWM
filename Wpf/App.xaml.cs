@@ -3,6 +3,7 @@ using System;
 using System.ComponentModel;
 using NotifyIcon = System.Windows.Forms.NotifyIcon;
 using PwmLib;
+using System.Windows.Threading;
 
 namespace Wpf
 {
@@ -54,6 +55,16 @@ namespace Wpf
 
             // by some reason _pwm.SetFrequency doesn't work if called from a background thread
             // _pwm.LookAfterFreq();
+            CheckLastFrequency();
+
+            var timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(5) };
+            timer.Tick += OnTimedEvent;
+            timer.Start();
+            _pwm.FreqWatch= true;
+        }
+
+        private void OnTimedEvent(object sender, EventArgs e)
+        {
             CheckLastFrequency();
         }
 
@@ -130,6 +141,7 @@ namespace Wpf
             }
 
             _mainWindow.Show();
+            _mainWindow.Focus();
         }
     }
 }

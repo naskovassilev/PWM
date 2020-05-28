@@ -19,7 +19,7 @@ namespace PwmLib
             {
                 return _freqWatch;
             }
-            private set
+            set
             {
                 _freqWatch = value;
             }
@@ -81,7 +81,7 @@ namespace PwmLib
             // Actually, I am in no way responsible for any damage of your device cause by this app, sorry :)
             if (frequency < 100 || frequency > 100000)
             {
-                OnError(frequency, $"Frequency {frequency} is not allowed. Frequency should be >= 200 and <= 2000.");
+                OnError(frequency, $"Frequency {frequency} is not allowed. Frequency should be >= 200 and <= 100000.");
                 return 100500;
             }
 
